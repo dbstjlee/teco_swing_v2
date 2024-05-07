@@ -1,4 +1,4 @@
-package bubble;
+package bubble.test.ex09;
 
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
@@ -9,23 +9,17 @@ import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 
-import bubble.components.Enemy;
-import bubble.components.Player;
-
 public class BubbleFrame extends JFrame {
 
 	// 컨텍스트를 생성하는 방법(셀프 참조)
 	// BubbleFrame bubbleFrame = this; // bubbleFrame 변수 자기 자신의 주소가 들어가 있음.
 	// this = BubbleFrame // 안에 add() 호출 가능
-	BubbleFrame mContext = this; // 컨텍스트 생성
+	BubbleFrame mContext = this; // 컨테스트 생성
 
 	private JLabel backgroundMap;
 	// 포함관계 - 콤포지션
 	private Player player;// BubbleFrame 안에 Player 포함
 	// Bubble bubble;// 하나의 객체 주소만 담으려고 끼워 넣은 거임.
-	
-	private Enemy enemy1;
-	
 
 	public BubbleFrame() {
 		initDate(); // 먼저 호출되어야 한다.
@@ -34,7 +28,7 @@ public class BubbleFrame extends JFrame {
 
 		// Player 백그라운드 서비스 시작
 		// new BackgroundPlayerService(player); // 객체는 생성되었는데 일하는 건 아님
-		//new Thread(new BackgroundPlayerService(player)).start(); // BackgroundPlayerService 가 객체 안에 생성됨.
+		new Thread(new BackgroundPlayerService(player)).start(); // BackgroundPlayerService 가 객체 안에 생성됨.
 		// new.remove(player); -> 플레이어 지워짐
 	}
 
@@ -50,8 +44,6 @@ public class BubbleFrame extends JFrame {
 
 		// mContext -> 참조 타입() --> 주소값이 들어감. 주소값 크기: 기본 4byte 이다.
 		player = new Player(mContext); // 메모리에 올림 // 생성자 매개변수 타입에 mContext 넣기
-		
-		enemy1 = new Enemy(mContext);
 	}
 
 	private void setInitLayout() {
@@ -62,7 +54,6 @@ public class BubbleFrame extends JFrame {
 		setVisible(true);
 
 		add(player);
-		add(enemy1);
 	}
 
 	private void addEventListener() {
@@ -137,10 +128,6 @@ public class BubbleFrame extends JFrame {
 	// getter
 	public Player getPlayer() {
 		return player;
-	}
-	
-	public Enemy getEnemy() {
-		return enemy1;
 	}
 
 	// 코드 테스트

@@ -1,4 +1,4 @@
-package bubble;
+package bubble.test.ex10;
 
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
@@ -8,9 +8,6 @@ import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
-
-import bubble.components.Enemy;
-import bubble.components.Player;
 
 public class BubbleFrame extends JFrame {
 
