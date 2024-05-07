@@ -191,18 +191,18 @@ public class Player extends JLabel implements Moveable {
 	@Override
 	public void right() {
 		playerWay = PlayerWay.RIGHT; // 방향에 따라 값이 변함
-		right = true;// 플레이어의 움직임은 오른쪽
-		setIcon(playerR); // 오른쪽을 향하는 그림 부착
+		right = true;
+		setIcon(playerR);
 
 		new Thread(new Runnable() { // Runnable 구현 클래스로 생성
 
 			@Override
 			public void run() {
 				while (right) {
-					x = x + SPEED; // 플레이어의 움직임은 오른쪽으로 x만큼 이동
+					x = x + SPEED;
 					setLocation(x, y); // 다시 위치를 찍어주는 동작이다.
 					try {
-						Thread.sleep(10); // 0.01 초 (1000 = 1초, 100 = 0.1초, 10 = 0.001초)
+						Thread.sleep(10); // 0.01
 					} catch (InterruptedException e) {
 						e.printStackTrace();
 					}

@@ -14,7 +14,7 @@ public class BubbleFrame extends JFrame {
 	private JLabel backgroundMap;
 	// 포함관계 - 콤포지션
 	private Player player;// BubbleFrame 안에 Player 포함
-	//Bubble bubble;// 이거는 하나의 객체 주소만 담으려고 끼워 넣은 거임.
+	//Bubble bubble;// 하나의 객체 주소만 담으려고 끼워 넣은 거임.
 
 	public BubbleFrame() {
 		initDate(); // 먼저 호출되어야 한다.
@@ -23,7 +23,7 @@ public class BubbleFrame extends JFrame {
 
 		// Player 백그라운드 서비스 시작
 		// new BackgroundPlayerService(player); // 객체는 생성되었는데 일하는 건 아님
-		new Thread(new BackgroundPlayerService(player)).start(); // BackgroundPlayerService 객체가 Thread 객체 안에서 생성되어 일하기 시작함.
+		new Thread(new BackgroundPlayerService(player)).start(); // BackgroundPlayerService 가 객체 안에 생성됨.
 	}
 
 	private void initDate() {
@@ -65,8 +65,8 @@ public class BubbleFrame extends JFrame {
 					// 왼쪽 벽에 충돌한 게 아니라면
 					// 단 한 번만 호출할 수 있음
 					if (!player.isLeft() && !player.isLeftWallCrash()) { 
-						// 왼쪽 상태도 아니고 And 왼쪽 벽에 충돌한게 아니어야만 (둘 다 true 여야만) 호출됨.
-						player.left(); // player의 left() 메서드(움직임 상태)를 호출함
+						// 왼쪽 상태도 아니고 왼쪽 벽에 충돌한게 아니어야만 (둘 다 true 여야만) 호출됨.
+						player.left();
 					}
 					break;
 

@@ -36,8 +36,8 @@ public class BackgroundPlayerService implements Runnable {
 
 		while (true) {
 
-			Color leftColor = new Color(image.getRGB(player.getX(), player.getY())); // x, y 정수 픽셀을 반환
-			Color rightColor = new Color(image.getRGB(player.getX(), player.getY()));
+			Color leftColor = new Color(image.getRGB(player.getX() + 10, player.getY() + 25));
+			Color rightColor = new Color(image.getRGB(player.getX() + 50 + 10, player.getY() + 25));
 			// x 좌표: 왼 -> 오 (50) +10 넓힘
 			// y 좌표: 25만큼 낮춤
 
@@ -45,24 +45,24 @@ public class BackgroundPlayerService implements Runnable {
 			// 흰색이면 RGB => 255 255 255
 			// 바닥인 경우 --> 255 0 0(바닥이라고 판단 가능)
 			// 바닥(1층)인 경우 --> 0 0 255(바닥이라고 판단 가능)
-			int bottomColorLeft = image.getRGB(player.getX(), player.getY()); // 객체를 이미지로/ int로 하면 수치 나옴.
-			int bottomColorRight = image.getRGB(player.getX(), player.getY()); 
+			int bottomColorLeft = image.getRGB(player.getX() + 30, player.getY() + 50 + 5); // 객체를 이미지로. int로 하면 수치 나옴.
+			int bottomColorRight = image.getRGB(player.getX() + 40, player.getY() + 50 + 5); // 객체를 이미지로. int로 하면
 
-			if (bottomColorLeft + bottomColorRight != -2) { // 바닥 오+왼 =  -2 가 아니면
+			if (bottomColorLeft + bottomColorRight != -2) { // 빨간 바닥 + 파란색 바닥 -2 가 아니면
 				// 여기는 멈춰야 함(빨간 바닥 또는 파란색 바닥)
-				player.setDown(false);// 떨어지지 마라는 의미
+				player.setDown(false);
 			} else {
 				// 플레이어가 올라가는 상태가 아니라면
 				// 그리고
 				// 플레이어가 내려가는 상태가 아니라면
 				// down() 호출
 				if (!player.isUp() && !player.isDown()) {
-					player.down(); // 떨어지라는 의미 // player의 down() 메서드가 호출됨
+					player.down();
 				}
 
 			}
 
-			// 하얀색 부분 ---> int 값이 - 1임.
+			// 하얀색 ---> int 값이 - 1이 됨.
 			// if(bottomColorLeft == -1) {}
 			// 밑으로 계속 떨어져라는 개념
 

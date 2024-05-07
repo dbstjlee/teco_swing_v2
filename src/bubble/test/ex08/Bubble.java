@@ -7,7 +7,10 @@ import javax.swing.JLabel;
 // JLabel은 컴포넌트라 붙여야만(add) 눈에 보임
 public class Bubble extends JLabel implements Moveable {
 
+	// 의존성 컴포지션 관계
 	private Player player;
+	private BackgroundBubbleService backgroundBubbleService;
+	// 버블 객체 생성 시 메모리에 올라가야 함. -> initData로 가서 초기화하기
 
 	private int x; // 플레이어의 x 좌표
 	private int y; // 플레이어의 y 좌표
@@ -119,6 +122,7 @@ public class Bubble extends JLabel implements Moveable {
 		bubble = new ImageIcon("img/bubble.png");
 		bubbled = new ImageIcon("img/bubbled.png");
 		bomb = new ImageIcon("img/bomb.png");
+		backgroundBubbleService = new BackgroundBubbleService(this); // 자기 자신이 들어와야 함.// 메서도 호출 가능
 
 		// 기본값
 		left = false;
@@ -135,7 +139,7 @@ public class Bubble extends JLabel implements Moveable {
 
 		setIcon(bubble); // 버블 그림 아이콘
 		setSize(50, 50); // 버블 크기
-		setLocation(x, y); // 버블의 좌표 
+		setLocation(x, y); // 버블의 좌표
 	}
 
 	// 공통으로 사용하는 부분을 메서드로 만들어 보자.
@@ -148,7 +152,7 @@ public class Bubble extends JLabel implements Moveable {
 
 			@Override
 			public void run() {
-				if (player.playerWay == PlayerWay.LEFT) { 
+				if (player.playerWay == PlayerWay.LEFT) {
 					// player 클래스의 playWay 변수와 PlayerWay enum의 LEFT와 같다면 밑에 있는 left() 호출
 					left(); // 호출되면 플레이어가 왼쪽을 바라보면 왼쪽으로 방울을 쏘게 만듬
 				} else { // player 클래스의 playWay 변수와 PlayerWay enum의 LEFT와 같다면
@@ -160,10 +164,16 @@ public class Bubble extends JLabel implements Moveable {
 
 	@Override
 	public void left() { // 플레이어가 왼쪽을 바라보면 왼쪽으로 방울을 쏨
-		left = true; 
+		left = true;
 		for (int i = 0; i < 400; i++) {
 			x--; // 방울이 왼쪽으로 이동
 			setLocation(x, y); // 좌표를 찍어서 방울이 보이도록 함.
+			// 벽에 부딪혔는지 확인
+			// 만약 왼쪽 벽에 부딪혔다면 --> up() 메서드 생성해야 함.
+			if (backgroundBubbleService.leftWall()) {
+				// true = 부딪힘. -> 반복문 멈춤.
+				break;
+			}
 			try {
 				Thread.sleep(1);
 			} catch (InterruptedException e) {
@@ -181,6 +191,10 @@ public class Bubble extends JLabel implements Moveable {
 		for (int i = 0; i < 400; i++) {
 			x++; // 방울이 오른쪽으로 이동
 			setLocation(x, y);
+			if(backgroundBubbleService.rightWall()) {
+				// 만약에 부딪힌 상태라면 
+				break;
+			}
 			try {
 				Thread.sleep(1);
 			} catch (InterruptedException e) {
@@ -197,6 +211,9 @@ public class Bubble extends JLabel implements Moveable {
 		while (true) {
 			y--;
 			setLocation(x, y);
+			if(backgroundBubbleService.topWall()) {
+				break;
+			}
 			try {
 				Thread.sleep(1);
 			} catch (InterruptedException e) {
