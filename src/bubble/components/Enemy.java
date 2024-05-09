@@ -175,7 +175,7 @@ public class Enemy extends JLabel implements Moveable {
 		up = false;
 		down = false;
 
-		enemyWay = EnemyWay.LEFT;
+		enemyWay = EnemyWay.LEFT; // 기본값(왼쪽 바라봄)
 	}
 
 	private void setInitLayout() {
@@ -190,9 +190,6 @@ public class Enemy extends JLabel implements Moveable {
 		enemyWay = EnemyWay.LEFT;
 		left = true; // 왼쪽으로 움직임(가고 있는 상태)
 		setIcon(enemyL); // 왼쪽 방향키 이벤트 발생 시 이미지를 왼쪽을 보는 이미지로 셋팅
-
-		// <- <- <- 반복문(횟수 제한X) => while
-		// main 은 KeyEvent 받음 -> 다른 작업자한테 위임함 -> new Thread(new Runnable()).start();
 		new Thread(new Runnable() { // -> 익명 클래스
 
 			@Override
@@ -202,12 +199,14 @@ public class Enemy extends JLabel implements Moveable {
 					x = x - SPEED; // 왼쪽으로 가니까 '-'(마이너스)
 					setLocation(x, y); // 다시 위치를 찍어줌
 					try {
-						Thread.sleep(10); // 0.01초
+						Thread.sleep(3000); 
 					} catch (InterruptedException e) {
 						e.printStackTrace();
 					}
 				}
-			}
+				left = false;
+				right();
+			} 
 		}).start();
 	}
 
@@ -227,11 +226,13 @@ public class Enemy extends JLabel implements Moveable {
 					x = x + SPEED;
 					setLocation(x, y); // 다시 위치를 찍어주는 동작이다.
 					try {
-						Thread.sleep(10); // 0.01
+						Thread.sleep(300); // 0.01
 					} catch (InterruptedException e) {
 						e.printStackTrace();
 					}
 				}
+				right = false;
+				left();
 			}
 		}).start();
 
@@ -265,8 +266,5 @@ public class Enemy extends JLabel implements Moveable {
 
 	@Override
 	public void up() {
-		// TODO Auto-generated method stub
-		
 	}
-
 }

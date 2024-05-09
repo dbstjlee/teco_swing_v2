@@ -15,7 +15,8 @@ import bubble.components.Enemy;
 public class BackgroundEnemyService implements Runnable {
 
 	private BufferedImage image; // 위치를 알아야 함 // BufferedImage 다시 공부...
-	private Enemy enemy; // Player 참조함.
+	private Enemy enemy;
+	boolean flag;
 
 	// 생성자 의존 주입 DI - 연관관계?
 	public BackgroundEnemyService(Enemy enemy) {
@@ -35,9 +36,10 @@ public class BackgroundEnemyService implements Runnable {
 //		System.out.println(leftColor.getRed());
 //		System.out.println(image.getRGB(player.getX(), player.getY())); // 위치 확인됨
 
-		while (true) {
+		while (flag) {
 
-			Color leftColor = new Color(image.getRGB(enemy.getX() + 10, enemy.getY() + 25));
+			flag = true;
+			Color leftColor = new Color(image.getRGB(enemy.getX() + 50, enemy.getY() + 25));
 			Color rightColor = new Color(image.getRGB(enemy.getX() + 50 + 10, enemy.getY() + 25));
 			// x 좌표: 왼 -> 오 (50) +10 넓힘
 			// y 좌표: 25만큼 낮춤
@@ -69,12 +71,10 @@ public class BackgroundEnemyService implements Runnable {
 
 			// 왼쪽벽에 충돌함(왼쪽 벽 색이 빨강일때)
 			if (leftColor.getRed() == 255 && leftColor.getGreen() == 0 && leftColor.getBlue() == 0) {
-				System.out.println("왼쪽벽에 충돌함");
 				enemy.setLeftWallCrash(true); // 벽에 충돌함 = true
 				enemy.setLeft(false); // while문이 멈춤
 
 			} else if (rightColor.getRed() == 255 && rightColor.getGreen() == 0 && rightColor.getBlue() == 0) {
-				System.out.println("오른쪽벽에 충돌함");
 				enemy.setRightWallCrash(true);
 				enemy.setRight(false);
 			} else { // 아니면 계속 안 부딪혔는지
@@ -83,11 +83,11 @@ public class BackgroundEnemyService implements Runnable {
 			}
 
 			// 위 두 조건이 아니면 player 마음대로 움직일 수 있다.
-			try {
-				Thread.sleep(10);
-			} catch (InterruptedException e) {
-				e.printStackTrace();
-			}
+//			try {
+//				Thread.sleep(10);
+//			} catch (InterruptedException e) {
+//				e.printStackTrace();
+//			}
 			// System.out.println(player.getX() + " , " + player.getX()); // 위치 확인됨
 		}
 		// 플레이어 위치 확인
