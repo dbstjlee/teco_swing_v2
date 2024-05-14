@@ -28,7 +28,7 @@ public class BubbleFrame extends JFrame {
 	
 
 	public BubbleFrame() {
-		initDate(); // 먼저 호출되어야 한다.
+		initData(); // 먼저 호출되어야 한다.
 		setInitLayout();
 		addEventListener();
 
@@ -38,7 +38,7 @@ public class BubbleFrame extends JFrame {
 		// new.remove(player); -> 플레이어 지워짐
 	}
 
-	private void initDate() {
+	private void initData() {
 		// todo 이미지 변경
 		backgroundMap = new JLabel(new ImageIcon("img/backgroundMap.png")); // new ImageIcon() : 익명 클래스
 		// backgroundMap = new JLabel(new ImageIcon("img/test.png")); // new ImageIcon()
